@@ -1,8 +1,8 @@
 {
-  "name": "GitHub forks",
+  "name": "GagHob",
   "version": "1.0.2",
-  "manifest_version": 2,
-  "description": "Extend GitHub's network tab with more detail about the forks. And sort by importance.",
+  "manifest_version": 3,
+  "description": "githubbing like a pro",
   "icons": {
     "16": "images/icon16.png",
     "48": "images/icon48.png",
@@ -12,7 +12,7 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "js": [
-        "forks.js"
+        "gaghob.js"
       ]
     }
   ]

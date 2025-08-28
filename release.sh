@@ -11,5 +11,5 @@ fi
 
 echo "Releasing version $VERSION"
 
-zip -r -FS GitHubForks-"$VERSION".zip ./* --exclude '*.git*'
+zip -r -FS GagHob-"$VERSION".zip ./* --exclude '*.git*'
 
