@@ -42,8 +42,11 @@ const annotatePr = (prId) => {
 }
 
 const setPrIcon = (prDiv) => {
-  const iconDiv = prDiv.querySelector('commit-build-statuses')
-  iconDiv.innerHTML = '<h1>HELLO</h1>'
+  // we can not use the ghIconDiv because github already patches that with ajax
+  // never mind github nukes the entire thing it seems
+  // maybe we just need a timeout instead
+  const ghIconDiv = prDiv.querySelector('.commit-build-statuses')
+  ghIconDiv.parentElement.insertAdjacentHTML('beforeend', '<div>GagHob: STATUS UNKNOWN</div>')
 }
 
 const listPrs = () => {
@@ -59,7 +62,13 @@ const enrichPulls = () => {
     return
   }
 
-  listPrs()
+  // this is extremly ugly and depends on network speed
+  // full on race condition!
+  // there might be a way to listen for the hotwire event github uses to refresh the list
+  setTimeout(() => {
+    listPrs()
+  }, 1000)
+
   // annotatePr(10773)
 }
 
