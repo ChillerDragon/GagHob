@@ -30,30 +30,26 @@ const isGithubPullsPage= () => {
   return false
 }
 
-const annotatePr = (prId) => {
+const annotatePr = (prDiv) => {
+  const prId = prDiv.id.split('_')[1]
   ghApi(`/repos/ddnet/ddnet/pulls/${prId}`).then((data) => {
-    // console.log(data.rebaseable)
-    // console.log(data)
-
-    if(data.rebaseable) {
-      console.log(`pr ${prId} is rebaseable`)
-    }
+    const statusIcon = data.rebaseable ? 'OK' : 'ERROR'
+    setPrIcon(prDiv, statusIcon)
   })
 }
 
-const setPrIcon = (prDiv) => {
+const setPrIcon = (prDiv, statusIcon) => {
   // we can not use the ghIconDiv because github already patches that with ajax
   // never mind github nukes the entire thing it seems
   // maybe we just need a timeout instead
   const ghIconDiv = prDiv.querySelector('.commit-build-statuses')
-  ghIconDiv.parentElement.insertAdjacentHTML('beforeend', '<div>GagHob: STATUS UNKNOWN</div>')
+  ghIconDiv.parentElement.insertAdjacentHTML('beforeend', `<div>GagHob: ${statusIcon}</div>`)
 }
 
 const listPrs = () => {
   const prDivs = document.querySelectorAll('[data-issue-and-pr-hovercards-enabled][aria-label="Issues"] > div > div')
   prDivs.forEach((prDiv) => {
-    // const prId = prDiv.id.split('_')[1]
-    setPrIcon(prDiv)
+    annotatePr(prDiv)
   })
 }
 
